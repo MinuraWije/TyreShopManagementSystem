@@ -1,13 +1,26 @@
 package controller;
 
 import com.jfoenix.controls.JFXButton;
+import dto.tm.CustomerTM;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import model.CustomerModel;
 
-public class ViewCustomerFormController {
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class ViewCustomerFormController implements Initializable {
 
     @FXML
     private JFXButton homeBtn;
@@ -40,7 +53,7 @@ public class ViewCustomerFormController {
     private JFXButton btnBack;
 
     @FXML
-    private TableView<?> tblCustomer;
+    public TableView<CustomerTM> tblCustomer;
 
     @FXML
     private TableColumn<?, ?> colCustomerId;
@@ -57,9 +70,46 @@ public class ViewCustomerFormController {
     @FXML
     private TableColumn<?, ?> colEmail;
 
-    @FXML
-    void btnBackOnAction(ActionEvent event) {
+    private void getAll() {
+        try {
+            List<CustomerTM> customerTMS = CustomerModel.getAll();
+            ObservableList<CustomerTM> list = FXCollections.observableArrayList();
+            for (CustomerTM customerTM :customerTMS){
+                list.add(
+                        new CustomerTM(
+                                customerTM.getCustomerId(),
+                                customerTM.getName(),
+                                customerTM.getAddress(),
+                                customerTM.getTelNum(),
+                                customerTM.getEmail()
+                        ));
+            }
+            tblCustomer.setItems(list);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    private void setCellValueFactory() {
+
+        colCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colNumber.setCellValueFactory(new PropertyValueFactory<>("telNum"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setCellValueFactory();
+        getAll();
+    }
+    @FXML
+    void btnBackOnAction(ActionEvent event) throws IOException {
+        AnchorPane load = FXMLLoader.load(getClass().getResource("/view/customerForm.fxml"));
+        viewCustomerPane.getChildren().clear();
+        viewCustomerPane.getChildren().add(load);
     }
 
     @FXML

@@ -3,12 +3,16 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import dto.CustomerDTO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import model.CustomerModel;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class CustomerFormController {
@@ -67,25 +71,31 @@ public class CustomerFormController {
     @FXML
     private JFXTextField txtEmail;
 
-    private CustomerModel cusModel = new CustomerModel();
+    ObservableList<CustomerDTO> observableList = FXCollections.observableArrayList();
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
         String customerId = txtCustomerId.getText();
 
-        try{
-            boolean isDeleted = cusModel.deleteCustomer(customerId);
-            if(isDeleted){
-                new Alert(Alert.AlertType.CONFIRMATION,"Customer deleted").show();
-            }else {
-                new Alert(Alert.AlertType.CONFIRMATION,"Customer not deleted").show();
+        try {
+            boolean isRemoved = CustomerModel.delete(customerId);
+
+            if (isRemoved) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Deleted successfully").show();
+                txtCustomerId.setText("");
+                txtName.setText("");
+                txtAddress.setText("");
+                txtNumber.setText("");
+                txtEmail.setText("");
+                observableList.clear();
+
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Delete failed").show();
             }
-        }
-        catch(SQLException e){
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
-
     @FXML
     void btnSaveOnAction(ActionEvent event) {
         String customerId = txtCustomerId.getText();
@@ -94,26 +104,32 @@ public class CustomerFormController {
         Integer telNum = Integer.valueOf(txtNumber.getText());
         String email = txtEmail.getText();
 
-        var dto = new CustomerDTO(customerId,name,address,telNum,email);
 
-        try{
-            boolean isSaved = cusModel.saveCustomer(dto);
-            if(isSaved){
-                new Alert(Alert.AlertType.CONFIRMATION,"Customer saved").show();
-                clearFields();
+        try {
+            boolean isSaved = CustomerModel.save(new CustomerDTO(customerId, name,address, telNum, email));
+
+
+            if (isSaved) {
+
+                new Alert(Alert.AlertType.CONFIRMATION, "Saved  !!!").show();
+                txtCustomerId.setText("");
+                txtName.setText("");
+                txtAddress.setText("");
+                txtNumber.setText("");
+                txtEmail.setText("");
+                observableList.clear();
+
+            } else {
+
+                new Alert(Alert.AlertType.ERROR, "Not saved  !!!").show();
+
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        catch (SQLException e){
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
+
     }
-    private void clearFields() {
-        txtCustomerId.setText("");
-        txtName.setText("");
-        txtAddress.setText("");
-        txtNumber.setText("");
-        txtEmail.setText("");
-    }
+
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
@@ -123,23 +139,31 @@ public class CustomerFormController {
         Integer telNum = Integer.valueOf(txtNumber.getText());
         String email = txtEmail.getText();
 
-        var dto = new CustomerDTO(customerId,name,address,telNum,email);
+        boolean isUpdated = false;
+        try {
+            isUpdated = CustomerModel.update(new CustomerDTO(customerId, name, address,telNum,email));
+            if (isUpdated) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Updated successfully").show();
+                txtCustomerId.setText("");
+                txtName.setText("");
+                txtAddress.setText("");
+                txtNumber.setText("");
+                txtEmail.setText("");
+                observableList.clear();
 
-        try{
-            boolean isUpdated = cusModel.updateCustomer(dto);
-            if(isUpdated){
-                new Alert(Alert.AlertType.CONFIRMATION,"Customer updated").show();
-                clearFields();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Update failed").show();
             }
-        }
-        catch (SQLException e){
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     @FXML
-    void btnViewOnAction(ActionEvent event) {
-
+    void btnViewOnAction(ActionEvent event) throws IOException {
+        AnchorPane load = FXMLLoader.load(getClass().getResource("/view/viewCustomerForm.fxml"));
+        customerPane.getChildren().clear();
+        customerPane.getChildren().add(load);
     }
 
     @FXML
@@ -184,7 +208,24 @@ public class CustomerFormController {
 
     @FXML
     void txtCustomerIdSearchOnAction(ActionEvent event) {
+        String customerId = txtCustomerId.getText();
 
+        try {
+            CustomerDTO customerDTO= CustomerModel.search(customerId);
+
+            if (customerDTO != null) {
+                txtCustomerId.setText(customerDTO.getCustomerId());
+                txtName.setText(customerDTO.getName());
+                txtAddress.setText(customerDTO.getAddress());
+                txtNumber.setText(String.valueOf(customerDTO.getTelNum()));
+                txtEmail.setText(customerDTO.getEmail());
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Invalid ID").show();
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

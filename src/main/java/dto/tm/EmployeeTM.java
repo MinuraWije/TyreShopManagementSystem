@@ -8,9 +8,10 @@ import lombok.*;
 @ToString
 
 public class EmployeeTM {
-    private String customerId;
+    private String employeeId;
     private String name;
     private String address;
     private int telNum;
     private String email;
+    private String role;
 }

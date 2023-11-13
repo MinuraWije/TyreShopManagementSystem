@@ -3,24 +3,32 @@ package db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DBConnection {
-    private static DBConnection dbConnection;
-    private Connection connection;
-    private DBConnection() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/MoratuwaTyreCenter","root","1234");
-    }
-    public static DBConnection getInstance() throws SQLException {
-        if(dbConnection==null){
-            dbConnection = new DBConnection();
-            return dbConnection;
-        }
-        else{
-            return dbConnection;
-        }
+    private final static String URL = "jdbc:mysql://localhost:3306/MoratuwaTyreCenter";
+    private final static Properties props = new Properties();
+
+    static {
+        props.setProperty("user", "root");
+        props.setProperty("password", "1234");
     }
 
-    public Connection getConnection() {
+    private static DBConnection dbConnection;
+    private static Connection connection;
+
+    private DBConnection() throws  SQLException {
+        connection = DriverManager.getConnection(URL, props);
+    }
+
+    public static DBConnection getInstance() throws SQLException {
+        if(dbConnection == null) {
+            return dbConnection = new DBConnection();
+        } else {
+            return dbConnection;
+        }
+    }
+    public static Connection getConnection() {
         return connection;
     }
 }
