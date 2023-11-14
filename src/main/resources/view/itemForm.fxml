@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemFormController">
+<AnchorPane fx:id="root" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemFormController">
     <children>
         <ImageView fitHeight="768.0" fitWidth="1366.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -60,27 +60,27 @@
                         <Font size="22.0" />
                     </font>
                 </JFXButton>
-                <JFXTextField fx:id="txtItemId" layoutX="142.0" layoutY="159.0" onAction="#txtItemIdSearchOnAction" prefHeight="54.0" prefWidth="265.0" text="Item ID">
+                <JFXTextField fx:id="txtItemId" layoutX="142.0" layoutY="159.0" onAction="#txtItemIdSearchOnAction" prefHeight="54.0" prefWidth="265.0" promptText="Item ID">
                     <font>
                         <Font size="25.0" />
                     </font>
                 </JFXTextField>
-                <JFXTextField fx:id="txtBrand" layoutX="557.0" layoutY="160.0" prefWidth="265.0" text="Brand">
+                <JFXTextField fx:id="txtBrand" layoutX="557.0" layoutY="160.0" prefWidth="265.0" promptText="Brand">
                     <font>
                         <Font size="25.0" />
                     </font>
                 </JFXTextField>
-                <JFXTextField fx:id="txtModel" layoutX="140.0" layoutY="264.0" prefHeight="54.0" prefWidth="265.0" text="Model">
+                <JFXTextField fx:id="txtModel" layoutX="140.0" layoutY="264.0" prefHeight="54.0" prefWidth="265.0" promptText="Model">
                     <font>
                         <Font size="25.0" />
                     </font>
                 </JFXTextField>
-                <JFXTextField fx:id="txtType" layoutX="557.0" layoutY="264.0" prefWidth="265.0" text="Type">
+                <JFXTextField fx:id="txtType" layoutX="557.0" layoutY="264.0" prefWidth="265.0" promptText="Type">
                     <font>
                         <Font size="25.0" />
                     </font>
                 </JFXTextField>
-                <JFXTextField fx:id="txtQtyOnHand" layoutX="140.0" layoutY="369.0" prefWidth="265.0" text="QtyOnHand">
+                <JFXTextField fx:id="txtQtyOnHand" layoutX="140.0" layoutY="369.0" prefWidth="265.0" promptText="QtyOnHand">
                     <font>
                         <Font size="25.0" />
                     </font>

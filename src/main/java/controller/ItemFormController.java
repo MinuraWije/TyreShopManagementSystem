@@ -2,11 +2,27 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import dto.CustomerDTO;
+import dto.ItemDTO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import model.CustomerModel;
+import model.ItemModel;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class ItemFormController {
+
+    @FXML
+    private AnchorPane root;
 
     @FXML
     private JFXButton homeBtn;
@@ -62,39 +78,122 @@ public class ItemFormController {
     @FXML
     private JFXTextField txtQtyOnHand;
 
+    ObservableList<ItemDTO> observableList = FXCollections.observableArrayList();
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
+        String itemId = txtItemId.getText();
 
+        try {
+            boolean isRemoved = ItemModel.delete(itemId);
+
+            if (isRemoved) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Deleted successfully").show();
+                txtItemId.setText("");
+                txtBrand.setText("");
+                txtModel.setText("");
+                txtType.setText("");
+                txtQtyOnHand.setText("");
+                observableList.clear();
+
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Delete failed").show();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
+        String itemId = txtItemId.getText();
+        String brand = txtBrand.getText();
+        String model = txtModel.getText();
+        String type = txtType.getText();
+        Integer qtyOnHand = Integer.valueOf(txtQtyOnHand.getText());
 
+
+        try {
+            boolean isSaved = ItemModel.save(new ItemDTO(itemId, brand,model, type, qtyOnHand));
+
+
+            if (isSaved) {
+
+                new Alert(Alert.AlertType.CONFIRMATION, "Saved  !!!").show();
+                txtItemId.setText("");
+                txtBrand.setText("");
+                txtModel.setText("");
+                txtType.setText("");
+                txtQtyOnHand.setText("");
+                observableList.clear();
+
+            } else {
+
+                new Alert(Alert.AlertType.ERROR, "Not saved  !!!").show();
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
+        String itemId = txtItemId.getText();
+        String brand = txtBrand.getText();
+        String model = txtModel.getText();
+        String type = txtType.getText();
+        Integer qtyOnHand = Integer.valueOf(txtQtyOnHand.getText());
 
+        boolean isUpdated = false;
+        try {
+            isUpdated = ItemModel.update(new ItemDTO(itemId, brand, model,type,qtyOnHand));
+            if (isUpdated) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Updated successfully").show();
+                txtItemId.setText("");
+                txtBrand.setText("");
+                txtModel.setText("");
+                txtType.setText("");
+                txtQtyOnHand.setText("");
+                observableList.clear();
+
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Update failed").show();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    void btnViewOnAction(ActionEvent event) {
+    void btnViewOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/viewItemForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
 
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
-    void customerBtnOnAction(ActionEvent event) {
+    void customerBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/customerForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
 
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
-    void employeeBtnOnAction(ActionEvent event) {
+    void employeeBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/employeeForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
 
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
-    void homeBtnOnAction(ActionEvent event) {
+    void homeBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/dashboardForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
 
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
@@ -103,28 +202,57 @@ public class ItemFormController {
     }
 
     @FXML
-    void logoutBtnOnAction(ActionEvent event) {
+    void logoutBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/loginForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
 
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
-    void orderBtnOnAction(ActionEvent event) {
+    void orderBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/orderForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
 
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
-    void paymentBtnOnAction(ActionEvent event) {
+    void paymentBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/paymentForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
 
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
-    void supplierBtnOnAction(ActionEvent event) {
+    void supplierBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/supplierForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
 
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
     void txtItemIdSearchOnAction(ActionEvent event) {
+        String itemId = txtItemId.getText();
 
+        try {
+            ItemDTO itemDTO= ItemModel.search(itemId);
+
+            if (itemDTO != null) {
+                txtItemId.setText(itemDTO.getItemId());
+                txtBrand.setText(itemDTO.getBrand());
+                txtModel.setText(itemDTO.getModel());
+                txtType.setText(itemDTO.getType());
+                txtQtyOnHand.setText(String.valueOf(itemDTO.getQtyOnHand()));
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Invalid ID").show();
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

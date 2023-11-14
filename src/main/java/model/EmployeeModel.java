@@ -13,7 +13,7 @@ import java.util.List;
 
 public class EmployeeModel {
     public static boolean save(EmployeeDTO employeeDTO) throws SQLException {
-        String sql = "INSERT INTO employee(employeeId,name,address,telNum,email,role) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO employee(employeeId,name,address,telNum,email,role) VALUES(?,?,?,?,?,?)";
         boolean isSaved = CrudUtil.execute(sql, employeeDTO.getEmployeeId(),employeeDTO.getName(),employeeDTO.getAddress(),employeeDTO.getTelNum(),employeeDTO.getEmail(), employeeDTO.getRole());
         return isSaved;
     }

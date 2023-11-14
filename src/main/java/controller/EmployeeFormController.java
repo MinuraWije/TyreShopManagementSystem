@@ -9,8 +9,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import model.CustomerModel;
 import model.EmployeeModel;
 
@@ -18,6 +20,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class EmployeeFormController {
+
+    @FXML
+    private AnchorPane root;
 
     @FXML
     private JFXButton homeBtn;
@@ -169,14 +174,18 @@ public class EmployeeFormController {
 
     @FXML
     void btnViewOnAction(ActionEvent event) throws IOException {
-        AnchorPane load = FXMLLoader.load(getClass().getResource("/view/viewEmployeeForm.fxml"));
-        employeePane.getChildren().clear();
-        employeePane.getChildren().add(load);
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/viewEmployeeForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
+
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
-    void customerBtnOnAction(ActionEvent event) {
+    void customerBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/CustomerForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
 
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
@@ -185,33 +194,51 @@ public class EmployeeFormController {
     }
 
     @FXML
-    void homeBtnOnAction(ActionEvent event) {
+    void homeBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/dashboardForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
 
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
-    void itemBtnOnAction(ActionEvent event) {
+    void itemBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/itemForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
 
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
-    void logoutBtnOnAction(ActionEvent event) {
+    void logoutBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/loginForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
 
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
-    void orderBtnOnAction(ActionEvent event) {
+    void orderBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/orderForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
 
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
-    void paymentBtnOnAction(ActionEvent event) {
+    void paymentBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/paymentForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
 
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
-    void supplierBtnOnAction(ActionEvent event) {
+    void supplierBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/supplierForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
 
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML

@@ -9,10 +9,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import model.CustomerModel;
 import model.EmployeeModel;
 
@@ -23,6 +25,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ViewEmployeeFormController implements Initializable {
+
+    @FXML
+    private AnchorPane root;
 
     @FXML
     private JFXButton homeBtn;
@@ -115,9 +120,10 @@ public class ViewEmployeeFormController implements Initializable {
 
     @FXML
     void btnBackOnAction(ActionEvent event) throws IOException {
-        AnchorPane load = FXMLLoader.load(getClass().getResource("/view/employeeForm.fxml"));
-        viewEmployeePane.getChildren().clear();
-        viewEmployeePane.getChildren().add(load);
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/employeeForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
+
+        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
