@@ -13,6 +13,5 @@ import java.time.LocalDate;
 public class OrderTM {
     private String orderId;
     private String customerId;
-    private int quantity;
     private LocalDate orderDate;
 }

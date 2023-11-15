@@ -13,25 +13,46 @@ create table customer(
 create table orders(
                        orderId varchar(35) primary Key,
                        customerId varchar(35),
-                       quantity int(5) not null,
                        orderDate date not null,
                        foreign key(customerId) references customer(customerId) on update cascade on delete cascade
 );
+/*create table orders(
+                       orderId varchar(35) primary Key,
+                       customerId varchar(35),
+                       quantity int(5) not null,
+                       orderDate date not null,
+                       foreign key(customerId) references customer(customerId) on update cascade on delete cascade
+);*/
 
 create table item(
                      itemId varchar(35) primary key,
                      brand varchar(35),
                      model varchar(35),
-                     type varchar(35),
+                     unitPrice double,
                      qtyOnHand int(5)
 );
+/*create table item(
+                     itemId varchar(35) primary key,
+                     brand varchar(35),
+                     model varchar(35),
+                     type varchar(35),
+                     qtyOnHand int(5)
+);*/
 
 create table orderDetail(
+                            orderId varchar(35),
+                            itemId varchar(35),
+                            quantity int(5) not null,
+                            unitPrice double,
+                            foreign key (itemId) references item(itemId) on update cascade on delete cascade,
+                            foreign key (orderId) references orders(orderId) on update cascade on delete cascade
+);
+/*create table orderDetail(
                             itemId varchar(35),
                             orderId varchar(35),
                             foreign key (itemId) references item(itemId) on update cascade on delete cascade,
                             foreign key (orderId) references orders(orderId) on update cascade on delete cascade
-);
+);*/
 
 create table supplier(
                          supplierId varchar(35) primary key,

@@ -18,14 +18,14 @@ public class ItemModel {
     }
 
     public static boolean save(ItemDTO itemDTO) throws SQLException {
-        String sql = "INSERT INTO item(itemId,brand,model,type,qtyOnHand) VALUES(?,?,?,?,?)";
-        boolean isSaved = CrudUtil.execute(sql, itemDTO.getItemId(),itemDTO.getBrand(),itemDTO.getModel(),itemDTO.getType(),itemDTO.getQtyOnHand());
+        String sql = "INSERT INTO item(itemId,brand,model,unitPrice,qtyOnHand) VALUES(?,?,?,?,?)";
+        boolean isSaved = CrudUtil.execute(sql, itemDTO.getItemId(),itemDTO.getBrand(),itemDTO.getModel(),itemDTO.getUnitPrice(),itemDTO.getQtyOnHand());
         return isSaved;
     }
 
     public static boolean update(ItemDTO itemDTO) throws SQLException {
-        String sql = "UPDATE item set brand=?,model=?,type=?,qtyOnHand=? WHERE itemId = ?";
-        return CrudUtil.execute(sql,itemDTO.getBrand(),itemDTO.getModel(),itemDTO.getType(),itemDTO.getQtyOnHand(),itemDTO.getItemId());
+        String sql = "UPDATE item set brand=?,model=?,unitPrice=?,qtyOnHand=? WHERE itemId = ?";
+        return CrudUtil.execute(sql,itemDTO.getBrand(),itemDTO.getModel(),itemDTO.getUnitPrice(),itemDTO.getQtyOnHand(),itemDTO.getItemId());
 
     }
 
@@ -39,7 +39,7 @@ public class ItemModel {
             itemDTO.setItemId(resultSet.getString(1));
             itemDTO.setBrand(resultSet.getString(2));
             itemDTO.setModel(resultSet.getString(3));
-            itemDTO.setType(resultSet.getString(4));
+            itemDTO.setUnitPrice(Double.valueOf(resultSet.getString(4)));
             itemDTO.setQtyOnHand(resultSet.getInt(5));
 
             return itemDTO;
@@ -56,7 +56,7 @@ public class ItemModel {
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
-                    resultSet.getString(4),
+                    resultSet.getDouble(4),
                     resultSet.getInt(5)
 
             );

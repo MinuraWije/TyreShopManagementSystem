@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.CustomerModel;
@@ -28,6 +29,7 @@ import java.util.List;
 
 public class PaymentFormController {
 
+    public ComboBox cmbOrderId;
     @FXML
     private AnchorPane root;
 
@@ -77,15 +79,15 @@ public class PaymentFormController {
     private JFXTextField txtAmount;
 
     @FXML
-    private JFXComboBox<?> cmbOrderId;
-
-    @FXML
     private JFXDatePicker paymentDate;
 
     @FXML
     private JFXTextField txtDescription;
 
+    private OrderModel orderModel = new OrderModel();
+
     ObservableList<PaymentDTO> observableList = FXCollections.observableArrayList();
+
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
@@ -278,7 +280,7 @@ public class PaymentFormController {
     private void loadOrderId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<OrderTM> orderTMS = OrderModel.getAll();
+            List<OrderTM> orderTMS = orderModel.getAll();
 
             for (OrderTM dto : orderTMS) {
                 obList.add(dto.getOrderId());

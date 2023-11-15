@@ -52,7 +52,7 @@
                         <TableColumn fx:id="colItemId" prefWidth="111.66665649414062" text="Item ID" />
                         <TableColumn fx:id="colBrand" prefWidth="177.33334350585938" text="Brand" />
                         <TableColumn fx:id="colModel" prefWidth="230.66668701171875" text="Model" />
-                        <TableColumn fx:id="colType" prefWidth="206.3333740234375" text="Type" />
+                        <TableColumn fx:id="colType" prefWidth="206.3333740234375" text="Unit Price" />
                         <TableColumn fx:id="colQtyOnHand" prefWidth="174.6666259765625" text="QtyOnHand" />
                     </columns>
                 </TableView>

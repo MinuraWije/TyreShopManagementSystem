@@ -13,6 +13,6 @@ public class ItemTM {
     private String itemId;
     private String brand;
     private String model;
-    private String type;
+    private Double unitPrice;
     private int qtyOnHand;
 }

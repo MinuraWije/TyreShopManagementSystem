@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -67,13 +67,8 @@
                         <Font size="25.0" />
                     </font>
                 </JFXTextField>
-                <JFXTextField fx:id="txtQuantity" layoutX="140.0" layoutY="264.0" prefHeight="54.0" prefWidth="265.0" promptText="Quantity">
-                    <font>
-                        <Font size="25.0" />
-                    </font>
-                </JFXTextField>
-            <JFXComboBox fx:id="cmbCustomerId" layoutX="557.0" layoutY="159.0" onAction="#cmbCustomerIdOnAction" prefHeight="54.0" prefWidth="265.0" promptText="Customer ID" />
-            <JFXDatePicker fx:id="orderDate" layoutX="557.0" layoutY="264.0" prefHeight="54.0" prefWidth="265.0" promptText="Order Date" />
+            <JFXDatePicker fx:id="orderDate" layoutX="142.0" layoutY="264.0" prefHeight="54.0" prefWidth="265.0" promptText="Order Date" />
+            <ComboBox fx:id="cmbCustomerId" layoutX="653.0" layoutY="166.0" onAction="#cmbCustomerIdOnAction" prefHeight="47.0" prefWidth="224.0" promptText="CustomerId" />
             </children></AnchorPane>
     </children>
 </AnchorPane>

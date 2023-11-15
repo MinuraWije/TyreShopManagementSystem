@@ -87,7 +87,7 @@ public class ViewItemFormController implements Initializable {
                                 itemTM.getItemId(),
                                 itemTM.getBrand(),
                                 itemTM.getModel(),
-                                itemTM.getType(),
+                                itemTM.getUnitPrice(),
                                 itemTM.getQtyOnHand()
                         ));
             }
@@ -102,7 +102,7 @@ public class ViewItemFormController implements Initializable {
         colItemId.setCellValueFactory(new PropertyValueFactory<>("itemId"));
         colBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
         colModel.setCellValueFactory(new PropertyValueFactory<>("model"));
-        colType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colType.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
         colQtyOnHand.setCellValueFactory(new PropertyValueFactory<>("qtyOnHand"));
     }
 

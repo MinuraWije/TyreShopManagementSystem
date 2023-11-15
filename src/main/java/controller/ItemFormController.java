@@ -73,7 +73,7 @@ public class ItemFormController {
     private JFXTextField txtModel;
 
     @FXML
-    private JFXTextField txtType;
+    private JFXTextField txtUnitPrice;
 
     @FXML
     private JFXTextField txtQtyOnHand;
@@ -91,7 +91,7 @@ public class ItemFormController {
                 txtItemId.setText("");
                 txtBrand.setText("");
                 txtModel.setText("");
-                txtType.setText("");
+                txtUnitPrice.setText("");
                 txtQtyOnHand.setText("");
                 observableList.clear();
 
@@ -108,12 +108,12 @@ public class ItemFormController {
         String itemId = txtItemId.getText();
         String brand = txtBrand.getText();
         String model = txtModel.getText();
-        String type = txtType.getText();
+        Double unitPrice = Double.valueOf(txtUnitPrice.getText());
         Integer qtyOnHand = Integer.valueOf(txtQtyOnHand.getText());
 
 
         try {
-            boolean isSaved = ItemModel.save(new ItemDTO(itemId, brand,model, type, qtyOnHand));
+            boolean isSaved = ItemModel.save(new ItemDTO(itemId, brand,model, unitPrice, qtyOnHand));
 
 
             if (isSaved) {
@@ -122,7 +122,7 @@ public class ItemFormController {
                 txtItemId.setText("");
                 txtBrand.setText("");
                 txtModel.setText("");
-                txtType.setText("");
+                txtUnitPrice.setText("");
                 txtQtyOnHand.setText("");
                 observableList.clear();
 
@@ -141,18 +141,18 @@ public class ItemFormController {
         String itemId = txtItemId.getText();
         String brand = txtBrand.getText();
         String model = txtModel.getText();
-        String type = txtType.getText();
+        Double unitPrice = Double.valueOf(txtUnitPrice.getText());
         Integer qtyOnHand = Integer.valueOf(txtQtyOnHand.getText());
 
         boolean isUpdated = false;
         try {
-            isUpdated = ItemModel.update(new ItemDTO(itemId, brand, model,type,qtyOnHand));
+            isUpdated = ItemModel.update(new ItemDTO(itemId, brand, model,unitPrice,qtyOnHand));
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Updated successfully").show();
                 txtItemId.setText("");
                 txtBrand.setText("");
                 txtModel.setText("");
-                txtType.setText("");
+                txtUnitPrice.setText("");
                 txtQtyOnHand.setText("");
                 observableList.clear();
 
@@ -244,7 +244,7 @@ public class ItemFormController {
                 txtItemId.setText(itemDTO.getItemId());
                 txtBrand.setText(itemDTO.getBrand());
                 txtModel.setText(itemDTO.getModel());
-                txtType.setText(itemDTO.getType());
+                txtUnitPrice.setText(String.valueOf(itemDTO.getUnitPrice()));
                 txtQtyOnHand.setText(String.valueOf(itemDTO.getQtyOnHand()));
             }else {
                 new Alert(Alert.AlertType.ERROR,"Invalid ID").show();
