@@ -1,11 +1,13 @@
 package model;
 
+import db.DBConnection;
 import dto.OrderDTO;
+import dto.PlaceOrderDTO;
 import dto.tm.OrderTM;
 import util.CrudUtil;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,5 +58,40 @@ public class OrderModel {
     public static boolean delete(String orderId) throws SQLException {
         String sql = "DELETE FROM orders WHERE orderId = ?";
         return CrudUtil.execute(sql,orderId);
+    }
+
+    public static String generateNextOrderId() throws SQLException {
+        Connection connection = DBConnection.getInstance().getConnection();
+
+        String sql = "SELECT orderId FROM orders ORDER BY orderId DESC LIMIT 1";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        ResultSet resultSet = pstm.executeQuery();
+        if(resultSet.next()) {
+            return splitOrderId(resultSet.getString(1));
+        }
+        return splitOrderId(null);
+    }
+
+    private static String splitOrderId(String currentOrderId) {
+        if(currentOrderId != null) {
+            String[] split = currentOrderId.split("O0");
+
+            int id = Integer.parseInt(split[1]); //01
+            id++;
+            return "O00" + id;
+        } else {
+            return "O001";
+        }
+    }
+    public boolean save(String orderId, String customerId, LocalDate pickupDate) throws SQLException {
+        Connection connection = DBConnection.getInstance().getConnection();
+
+        String sql = "INSERT INTO orders VALUES(?, ?, ?)";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setString(1, orderId);
+        pstm.setDate(3, Date.valueOf(pickupDate));
+        pstm.setString(2, customerId);
+        return pstm.executeUpdate() > 0;
     }
 }

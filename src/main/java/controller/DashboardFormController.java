@@ -1,14 +1,21 @@
 package controller;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DashboardFormController {
 
@@ -41,6 +48,35 @@ public class DashboardFormController {
 
     @FXML
     private AnchorPane load;
+    public Label lblTime;
+    public Label lblDate;
+
+    /*private void updateTimeLabel() {
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        String formattedTime = timeFormat.format(new Date());
+        lblTime.setText(formattedTime);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(new Date());
+        lblDate.setText(formattedDate);
+    }
+
+    public void initialize() {
+        updateTimeLabel();
+
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.seconds(1),
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        updateTimeLabel();
+                    }
+                }
+        ));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+
+    }*/
 
     @FXML
     void customerBtnOnAction(ActionEvent event) throws IOException {
@@ -81,7 +117,7 @@ public class DashboardFormController {
 
     @FXML
     void orderBtnOnAction(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/orderForm.fxml"));
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/placeOrderForm.fxml"));
         Stage stage = (Stage) root.getScene().getWindow();
 
         stage.setScene(new Scene(anchorPane));
