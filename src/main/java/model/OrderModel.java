@@ -1,8 +1,7 @@
 package model;
 
-import db.DBConnection;
+import db.DbConnection;
 import dto.OrderDTO;
-import dto.PlaceOrderDTO;
 import dto.tm.OrderTM;
 import util.CrudUtil;
 
@@ -61,7 +60,7 @@ public class OrderModel {
     }
 
     public static String generateNextOrderId() throws SQLException {
-        Connection connection = DBConnection.getInstance().getConnection();
+        Connection connection = DbConnection.getInstance().getConnection();
 
         String sql = "SELECT orderId FROM orders ORDER BY orderId DESC LIMIT 1";
         PreparedStatement pstm = connection.prepareStatement(sql);
@@ -85,13 +84,14 @@ public class OrderModel {
         }
     }
     public boolean save(String orderId, String customerId, LocalDate pickupDate) throws SQLException {
-        Connection connection = DBConnection.getInstance().getConnection();
+        Connection connection = DbConnection.getInstance().getConnection();
 
         String sql = "INSERT INTO orders VALUES(?, ?, ?)";
         PreparedStatement pstm = connection.prepareStatement(sql);
         pstm.setString(1, orderId);
-        pstm.setDate(3, Date.valueOf(pickupDate));
         pstm.setString(2, customerId);
+        pstm.setDate(3, Date.valueOf(pickupDate));
+
         return pstm.executeUpdate() > 0;
     }
 }

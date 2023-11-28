@@ -79,6 +79,11 @@
                </font>
             </JFXTextField>
             <ComboBox fx:id="cmbOrderId" layoutX="555.0" layoutY="166.0" onAction="#cmbOrderIdOnAction" prefHeight="39.0" prefWidth="242.0" promptText="Order Id" />
+            <JFXButton fx:id="btnPrint" alignment="CENTER" layoutX="191.0" layoutY="518.0" onAction="#btnPrintOnAction" prefHeight="50.0" prefWidth="105.0" style="-fx-background-color: #9AECDB; -fx-border-radius: 20; -fx-background-radius: 20; -fx-border-color: #00b894;" text="Print">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </JFXButton>
             </children></AnchorPane>
     </children>
 </AnchorPane>

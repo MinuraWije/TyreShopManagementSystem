@@ -13,9 +13,16 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.CustomerModel;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.regex.Pattern;
 
 public class CustomerFormController {
     @FXML
@@ -75,6 +82,9 @@ public class CustomerFormController {
     @FXML
     private JFXTextField txtEmail;
 
+    @FXML
+    private JFXButton btnPrint;
+
     ObservableList<CustomerDTO> observableList = FXCollections.observableArrayList();
 
     @FXML
@@ -102,36 +112,54 @@ public class CustomerFormController {
     }
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        String customerId = txtCustomerId.getText();
-        String name = txtName.getText();
-        String address = txtAddress.getText();
-        Integer telNum = Integer.valueOf(txtNumber.getText());
-        String email = txtEmail.getText();
+        boolean isValidated = validateCustomer();
+        if(isValidated){
+            //new Alert(Alert.AlertType.INFORMATION,"Customer id validated.").show();
 
+            String customerId = txtCustomerId.getText();
+            String name = txtName.getText();
+            String address = txtAddress.getText();
+            Integer telNum = Integer.parseInt(txtNumber.getText());
+            String email = txtEmail.getText();
 
-        try {
-            boolean isSaved = CustomerModel.save(new CustomerDTO(customerId, name,address, telNum, email));
+            try {
+                boolean isSaved = CustomerModel.save(new CustomerDTO(customerId, name,address, telNum, email));
 
+                if (isSaved) {
 
-            if (isSaved) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Saved  !!!").show();
+                    txtCustomerId.setText("");
+                    txtName.setText("");
+                    txtAddress.setText("");
+                    txtNumber.setText("");
+                    txtEmail.setText("");
+                    observableList.clear();
 
-                new Alert(Alert.AlertType.CONFIRMATION, "Saved  !!!").show();
-                txtCustomerId.setText("");
-                txtName.setText("");
-                txtAddress.setText("");
-                txtNumber.setText("");
-                txtEmail.setText("");
-                observableList.clear();
-
-            } else {
-
-                new Alert(Alert.AlertType.ERROR, "Not saved  !!!").show();
-
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Not saved  !!!").show();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+    }
 
+    private boolean validateCustomer() {
+        String customerId = txtCustomerId.getText();
+        boolean matches = Pattern.matches("[C][0-9]{3,}",customerId);
+
+        if(!matches){
+            new Alert(Alert.AlertType.ERROR, "Invalid customer id.").show();
+            return false;
+        }
+        /*Integer telNum = Integer.valueOf(txtNumber.getText());
+        boolean matches1 = Pattern.matches("[0-9]{10}]", telNum);
+
+        if(!matches1){
+            new Alert(Alert.AlertType.ERROR, "Invalid customer telephone number.").show();
+            return false;
+        }*/
+        return true;
     }
 
 
@@ -255,5 +283,46 @@ public class CustomerFormController {
             throw new RuntimeException(e);
         }
     }
+
+    @FXML
+    void btnPrintOnAction(ActionEvent event) {
+        String id = txtCustomerId.getText();
+
+        try {
+            CustomerDTO dto = CustomerModel.search(id);
+            if(dto!=null){
+                try {
+                    viewCustomerReport(dto);
+                } catch (JRException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void viewCustomerReport(CustomerDTO dto) throws JRException {
+        HashMap hashMap = new HashMap();
+        hashMap.put("id",dto.getCustomerId());
+        hashMap.put("name",dto.getName());
+        hashMap.put("address",dto.getAddress());
+        hashMap.put("number",Integer.toString(dto.getTelNum()));
+        hashMap.put("email",dto.getAddress());
+
+
+        InputStream resourceAsStream =  getClass().getResourceAsStream("/Report/Customer_report.jrxml");
+        JasperDesign load = JRXmlLoader.load(resourceAsStream);
+        JasperReport jasperReport= JasperCompileManager.compileReport(load);
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(
+                jasperReport,
+                hashMap,
+                new JREmptyDataSource()
+        );
+
+        JasperViewer.viewReport(jasperPrint,false);
+    }
+
 
 }

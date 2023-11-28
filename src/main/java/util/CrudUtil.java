@@ -1,13 +1,13 @@
 package util;
 
-import db.DBConnection;
+import db.DbConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class CrudUtil {
     public static <T> T execute(String sql,Object...args) throws SQLException {
-        PreparedStatement pstm= DBConnection.getInstance().getConnection().prepareStatement(sql);
+        PreparedStatement pstm= DbConnection.getInstance().getConnection().prepareStatement(sql);
 
         for (int i = 0; i < args.length;i++) {
             pstm.setObject((i+1),(args[i]));

@@ -1,10 +1,8 @@
 package model;
 
-import db.DBConnection;
-import dto.CustomerDTO;
+import db.DbConnection;
 import dto.ItemDTO;
 import dto.tm.CartTM;
-import dto.tm.CustomerTM;
 import dto.tm.ItemTM;
 import util.CrudUtil;
 
@@ -79,7 +77,7 @@ public class ItemModel {
     }
 
     public boolean updateQty(String code, int qty) throws SQLException {
-        Connection connection = DBConnection.getInstance().getConnection();
+        Connection connection = DbConnection.getInstance().getConnection();
 
         String sql = "UPDATE item SET qtyOnHand = qtyOnHand - ? WHERE ItemId = ?";
         PreparedStatement pstm = connection.prepareStatement(sql);

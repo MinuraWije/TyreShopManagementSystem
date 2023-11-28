@@ -21,11 +21,18 @@ import javafx.stage.Stage;
 import model.CustomerModel;
 import model.OrderModel;
 import model.PaymentModel;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class PaymentFormController {
 
@@ -73,6 +80,9 @@ public class PaymentFormController {
     private JFXButton btnView;
 
     @FXML
+    private JFXButton btnPrint;
+
+    @FXML
     private JFXTextField txtPaymentId;
 
     @FXML
@@ -115,35 +125,52 @@ public class PaymentFormController {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        String paymentId = txtPaymentId.getText();
-        String orderId = (String) cmbOrderId.getValue();
-        Double amount = Double.parseDouble(txtAmount.getText());
-        LocalDate date = paymentDate.getValue();
-        String description = txtDescription.getText();
+        boolean isValidated = validatePayment();
+        if(isValidated){
+            String paymentId = txtPaymentId.getText();
+            String orderId = (String) cmbOrderId.getValue();
+            Double amount = Double.parseDouble(txtAmount.getText());
+            LocalDate date = paymentDate.getValue();
+            String description = txtDescription.getText();
 
+            try {
+                boolean isSaved = PaymentModel.save(new PaymentDTO(paymentId, orderId,amount, date, description));
 
-        try {
-            boolean isSaved = PaymentModel.save(new PaymentDTO(paymentId, orderId,amount, date, description));
+                if (isSaved) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Saved  !!!").show();
+                    txtPaymentId.setText("");
+                    cmbOrderId.setValue("");
+                    txtAmount.setText("");
+                    paymentDate.setValue(LocalDate.parse(""));
+                    txtDescription.setText("");
+                    observableList.clear();
 
-
-            if (isSaved) {
-
-                new Alert(Alert.AlertType.CONFIRMATION, "Saved  !!!").show();
-                txtPaymentId.setText("");
-                cmbOrderId.setValue("");
-                txtAmount.setText("");
-                paymentDate.setValue(LocalDate.parse(""));
-                txtDescription.setText("");
-                observableList.clear();
-
-            } else {
-
-                new Alert(Alert.AlertType.ERROR, "Not saved  !!!").show();
-
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Not saved  !!!").show();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+
+    }
+
+    private boolean validatePayment() {
+        String paymentId = txtPaymentId.getText();
+        boolean matches = Pattern.matches("[P][0-9]{3,}",paymentId);
+
+        if(!matches){
+            new Alert(Alert.AlertType.ERROR, "Invalid payment id.").show();
+            return false;
+        }
+        /*Integer telNum = Integer.valueOf(txtNumber.getText());
+        boolean matches1 = Pattern.matches("[0-9]{10}]", telNum);
+
+        if(!matches1){
+            new Alert(Alert.AlertType.ERROR, "Invalid customer telephone number.").show();
+            return false;
+        }*/
+        return true;
     }
 
     @FXML
@@ -265,6 +292,45 @@ public class PaymentFormController {
             throw new RuntimeException(e);
         }
 
+    }
+    @FXML
+    void btnPrintOnAction(ActionEvent event) {
+        String id = txtPaymentId.getText();
+
+        try {
+            PaymentDTO dto =PaymentModel.search(id);
+            if(dto!=null){
+                try{
+                    viewPaymentReport(dto);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void viewPaymentReport(PaymentDTO dto) throws JRException {
+        HashMap hashMap = new HashMap();
+        hashMap.put("paymentid",dto.getPaymentId());
+        hashMap.put("orderid",dto.getOrderId());
+        hashMap.put("amount",dto.getAmount());
+        hashMap.put("paymentdate",dto.getPaymentDate());
+        hashMap.put("description",dto.getDescription());
+
+
+        InputStream resourceAsStream =  getClass().getResourceAsStream("/Report/Payment_report.jrxml");
+        JasperDesign load = JRXmlLoader.load(resourceAsStream);
+        JasperReport jasperReport= JasperCompileManager.compileReport(load);
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(
+                jasperReport,
+                hashMap,
+                new JREmptyDataSource()
+        );
+
+        JasperViewer.viewReport(jasperPrint,false);
     }
 
     @FXML

@@ -85,6 +85,11 @@
                   <Font size="25.0" />
                </font>
             </JFXTextField>
+            <JFXButton fx:id="btnPrint" alignment="CENTER" layoutX="382.0" layoutY="518.0" onAction="#btnPrintOnAction" prefHeight="50.0" prefWidth="105.0" style="-fx-background-color: #81ecec; -fx-border-radius: 20; -fx-background-radius: 20; -fx-border-color: #00b894;" text="Print">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </JFXButton>
          </children></AnchorPane>
     </children>
 </AnchorPane>

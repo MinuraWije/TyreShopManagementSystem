@@ -2,6 +2,7 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import db.DbConnection;
 import dto.CustomerDTO;
 import dto.ItemDTO;
 import dto.PlaceOrderDTO;
@@ -24,8 +25,13 @@ import model.CustomerModel;
 import model.ItemModel;
 import model.OrderModel;
 import model.PlaceOrderModel;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -125,6 +131,9 @@ public class PlaceOrderFormController implements Initializable{
 
     @FXML
     private JFXButton btnPlaceOrder;
+
+    @FXML
+    private JFXButton btnPrint;
 
     private CustomerModel customerModel = new CustomerModel();
     private ObservableList<CartTM> obList = FXCollections.observableArrayList();
@@ -309,6 +318,23 @@ public class PlaceOrderFormController implements Initializable{
         colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
         colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
         colAction.setCellValueFactory(new PropertyValueFactory<>("btn"));
+    }
+
+    @FXML
+    void btnPrintOnAction(ActionEvent event) throws JRException, SQLException {
+        InputStream resourceAsStream = getClass().getResourceAsStream("/Report/Order.jrxml");
+
+        JasperDesign load = JRXmlLoader.load(resourceAsStream);
+
+        JasperReport jasperReport = JasperCompileManager.compileReport(load);
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(
+                jasperReport,
+                null,
+                DbConnection.getInstance().getConnection()
+        );
+
+        JasperViewer.viewReport(jasperPrint, false);
     }
 
     @FXML

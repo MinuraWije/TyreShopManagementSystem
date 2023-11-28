@@ -18,6 +18,7 @@ import model.EmployeeModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 public class EmployeeFormController {
 
@@ -111,35 +112,56 @@ public class EmployeeFormController {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        String employeeId = txtEmployeeId.getText();
-        String name = txtName.getText();
-        String address = txtAddress.getText();
-        Integer telNum = Integer.valueOf(txtNumber.getText());
-        String email = txtEmail.getText();
-        String role = txtRole.getText();
+        boolean isValidated = validateEmployee();
+        if(isValidated){
+            //new Alert(Alert.AlertType.INFORMATION,"Employee id validated.").show();
 
-        try {
-            boolean isSaved = EmployeeModel.save(new EmployeeDTO(employeeId, name, address, telNum, email, role));
+            String employeeId = txtEmployeeId.getText();
+            String name = txtName.getText();
+            String address = txtAddress.getText();
+            Integer telNum = Integer.valueOf(txtNumber.getText());
+            String email = txtEmail.getText();
+            String role = txtRole.getText();
 
+            try {
+                boolean isSaved = EmployeeModel.save(new EmployeeDTO(employeeId, name, address, telNum, email, role));
 
-            if (isSaved) {
+                if (isSaved) {
 
-                new Alert(Alert.AlertType.CONFIRMATION, "Saved  !!!").show();
-                txtEmployeeId.setText("");
-                txtName.setText("");
-                txtAddress.setText("");
-                txtNumber.setText("");
-                txtEmail.setText("");
-                txtRole.setText("");
-                observableList.clear();
+                    new Alert(Alert.AlertType.CONFIRMATION, "Saved  !!!").show();
+                    txtEmployeeId.setText("");
+                    txtName.setText("");
+                    txtAddress.setText("");
+                    txtNumber.setText("");
+                    txtEmail.setText("");
+                    txtRole.setText("");
+                    observableList.clear();
 
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Not saved  !!!").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Not saved  !!!").show();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+    }
 
+    private boolean validateEmployee() {
+        String employeeId = txtEmployeeId.getText();
+        boolean matches = Pattern.matches("[E][0-9]{3,}",employeeId);
+
+        if(!matches){
+            new Alert(Alert.AlertType.ERROR, "Invalid employee id.").show();
+            return false;
+        }
+        /*Integer telNum = Integer.valueOf(txtNumber.getText());
+        boolean matches1 = Pattern.matches("[0-9]{10}]", telNum);
+
+        if(!matches1){
+            new Alert(Alert.AlertType.ERROR, "Invalid customer telephone number.").show();
+            return false;
+        }*/
+        return true;
     }
 
     @FXML

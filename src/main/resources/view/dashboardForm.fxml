@@ -27,16 +27,30 @@
       <JFXButton fx:id="employeeBtn" layoutX="20.0" layoutY="500.0" onAction="#employeeBtnOnAction" opacity="0.0" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 20;" />
       <JFXButton fx:id="paymentBtn" layoutX="20.0" layoutY="575.0" onAction="#paymentBtnOnAction" opacity="0.0" prefHeight="50.0" prefWidth="150.0" style="-fx-background-radius: 20;" />
       <JFXButton fx:id="logoutBtn" layoutX="1.0" layoutY="665.0" onAction="#logoutBtnOnAction" opacity="0.0" prefHeight="40.0" prefWidth="120.0" style="-fx-background-radius: 20;" />
-      <Label alignment="CENTER" layoutX="1188.0" layoutY="670.0" text="11:08">
+      <Label fx:id="lblTime" alignment="CENTER" layoutX="1188.0" layoutY="670.0" text="11:08">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="1000.0" layoutY="680.0" text="2023-11-03">
+      <Label fx:id="lblDate" alignment="CENTER" layoutX="1000.0" layoutY="680.0" text="2023-11-03">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="load" layoutX="197.0" layoutY="89.0" prefHeight="590.0" prefWidth="1035.0" />
+      <AnchorPane fx:id="load" layoutX="197.0" layoutY="89.0" prefHeight="590.0" prefWidth="1035.0">
+         <children>
+            <Label alignment="CENTER" layoutX="118.0" layoutY="86.0" prefHeight="62.0" prefWidth="176.0" text="No. of Employees" textFill="#1d72ac">
+               <font>
+                  <Font name="SansSerif Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblNoOfEmployees" alignment="CENTER" layoutX="135.0" layoutY="149.0" prefHeight="103.0" prefWidth="141.0" />
+            <Label alignment="CENTER" layoutX="427.0" layoutY="86.0" prefHeight="62.0" prefWidth="176.0" text="No. of Customers" textFill="#1d72ac">
+               <font>
+                  <Font name="SansSerif Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblNoOfCustomers" alignment="CENTER" layoutX="440.0" layoutY="148.0" prefHeight="103.0" prefWidth="141.0" />
+         </children></AnchorPane>
    </children>
 </AnchorPane>

@@ -18,6 +18,7 @@ import model.ItemModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 public class ItemFormController {
 
@@ -105,35 +106,45 @@ public class ItemFormController {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        String itemId = txtItemId.getText();
-        String brand = txtBrand.getText();
-        String model = txtModel.getText();
-        Double unitPrice = Double.valueOf(txtUnitPrice.getText());
-        Integer qtyOnHand = Integer.valueOf(txtQtyOnHand.getText());
+        boolean isValidated = validateItem();
+        if(isValidated){
+            String itemId = txtItemId.getText();
+            String brand = txtBrand.getText();
+            String model = txtModel.getText();
+            Double unitPrice = Double.valueOf(txtUnitPrice.getText());
+            Integer qtyOnHand = Integer.valueOf(txtQtyOnHand.getText());
 
+            try {
+                boolean isSaved = ItemModel.save(new ItemDTO(itemId, brand,model, unitPrice, qtyOnHand));
 
-        try {
-            boolean isSaved = ItemModel.save(new ItemDTO(itemId, brand,model, unitPrice, qtyOnHand));
+                if (isSaved) {
 
+                    new Alert(Alert.AlertType.CONFIRMATION, "Saved  !!!").show();
+                    txtItemId.setText("");
+                    txtBrand.setText("");
+                    txtModel.setText("");
+                    txtUnitPrice.setText("");
+                    txtQtyOnHand.setText("");
+                    observableList.clear();
 
-            if (isSaved) {
-
-                new Alert(Alert.AlertType.CONFIRMATION, "Saved  !!!").show();
-                txtItemId.setText("");
-                txtBrand.setText("");
-                txtModel.setText("");
-                txtUnitPrice.setText("");
-                txtQtyOnHand.setText("");
-                observableList.clear();
-
-            } else {
-
-                new Alert(Alert.AlertType.ERROR, "Not saved  !!!").show();
-
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Not saved  !!!").show();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+    }
+
+    private boolean validateItem() {
+        String itemId = txtItemId.getText();
+        boolean matches = Pattern.matches("[I][0-9]{3,}",itemId);
+
+        if(!matches){
+            new Alert(Alert.AlertType.ERROR, "Invalid item id.").show();
+            return false;
+        }
+        return true;
     }
 
     @FXML

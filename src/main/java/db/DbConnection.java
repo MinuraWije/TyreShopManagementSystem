@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class DBConnection {
+public class DbConnection {
     private final static String URL = "jdbc:mysql://localhost:3306/MoratuwaTyreCenter";
     private final static Properties props = new Properties();
 
@@ -14,16 +14,16 @@ public class DBConnection {
         props.setProperty("password", "1234");
     }
 
-    private static DBConnection dbConnection;
+    private static DbConnection dbConnection;
     private static Connection connection;
 
-    private DBConnection() throws  SQLException {
+    private DbConnection() throws  SQLException {
         connection = DriverManager.getConnection(URL, props);
     }
 
-    public static DBConnection getInstance() throws SQLException {
+    public static DbConnection getInstance() throws SQLException {
         if(dbConnection == null) {
-            return dbConnection = new DBConnection();
+            return dbConnection = new DbConnection();
         } else {
             return dbConnection;
         }

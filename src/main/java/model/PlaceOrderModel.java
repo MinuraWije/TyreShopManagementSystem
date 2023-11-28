@@ -1,6 +1,6 @@
 package model;
 
-import db.DBConnection;
+import db.DbConnection;
 import dto.PlaceOrderDTO;
 
 import java.sql.Connection;
@@ -14,13 +14,12 @@ public class PlaceOrderModel {
         //System.out.println(placeOrderDto);
 
         String orderId = placeOrderDto.getOrderId();
-        //double amount = placeOrderDto.getAmount();
         String customerId = placeOrderDto.getCustomerId();
         LocalDate pickupDate = placeOrderDto.getPickupDate();
 
         Connection connection = null;
         try {
-            connection = DBConnection.getInstance().getConnection();
+            connection = DbConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
 
             boolean isOrderSaved =  orderModel.save(orderId, customerId,pickupDate);

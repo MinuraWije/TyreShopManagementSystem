@@ -48,10 +48,22 @@ public class DashboardFormController {
 
     @FXML
     private AnchorPane load;
-    public Label lblTime;
-    public Label lblDate;
 
-    /*private void updateTimeLabel() {
+    @FXML
+    private Label lblNoOfEmployees;
+
+    @FXML
+    private Label lblNoOfCustomers;
+
+    @FXML
+    private Label lblTime;
+
+    @FXML
+    private Label lblDate;
+    //public Label lblTime;
+    //public Label lblDate;
+
+    private void updateTimeLabel() {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         String formattedTime = timeFormat.format(new Date());
         lblTime.setText(formattedTime);
@@ -76,7 +88,7 @@ public class DashboardFormController {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
-    }*/
+    }
 
     @FXML
     void customerBtnOnAction(ActionEvent event) throws IOException {

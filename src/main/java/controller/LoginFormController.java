@@ -31,20 +31,16 @@ public class LoginFormController {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
 
-        // Check for user role based on username
         if ("user".equals(username)) {
-            // User role
             String validUserPassword = "1234";
 
             if (password.equals(validUserPassword)) {
-                // Username and password are correct for the user role, proceed to userDashboard
                 loadDashboard("/view/dashboardForm.fxml");
-                return; // Exit the method
+                return;
             }
 
         }
 
-        // Username or password is incorrect, show an error message
         showErrorDialog("Login Failed", "Invalid username or password. Please try again.");
     }
     private void loadDashboard(String dashboardFXMLPath) throws IOException {

@@ -18,6 +18,7 @@ import model.SupplierModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 public class SupplierFormController {
 
@@ -106,35 +107,53 @@ public class SupplierFormController {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        String supplierId = txtSupplierId.getText();
-        String name = txtName.getText();
-        String address = txtAddress.getText();
-        Integer telNum = Integer.valueOf(txtNumber.getText());
-        String email = txtEmail.getText();
+        boolean isValidated = validateSupplier();
+        if(isValidated){
+            String supplierId = txtSupplierId.getText();
+            String name = txtName.getText();
+            String address = txtAddress.getText();
+            Integer telNum = Integer.valueOf(txtNumber.getText());
+            String email = txtEmail.getText();
 
 
-        try {
-            boolean isSaved = SupplierModel.save(new SupplierDTO(supplierId, name,address, telNum, email));
+            try {
+                boolean isSaved = SupplierModel.save(new SupplierDTO(supplierId, name,address, telNum, email));
 
+                if (isSaved) {
 
-            if (isSaved) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Saved  !!!").show();
+                    txtSupplierId.setText("");
+                    txtName.setText("");
+                    txtAddress.setText("");
+                    txtNumber.setText("");
+                    txtEmail.setText("");
+                    observableList.clear();
 
-                new Alert(Alert.AlertType.CONFIRMATION, "Saved  !!!").show();
-                txtSupplierId.setText("");
-                txtName.setText("");
-                txtAddress.setText("");
-                txtNumber.setText("");
-                txtEmail.setText("");
-                observableList.clear();
-
-            } else {
-
-                new Alert(Alert.AlertType.ERROR, "Not saved  !!!").show();
-
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Not saved  !!!").show();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+    }
+
+    private boolean validateSupplier() {
+        String supplierId = txtSupplierId.getText();
+        boolean matches = Pattern.matches("[S][0-9]{3,}",supplierId);
+
+        if(!matches){
+            new Alert(Alert.AlertType.ERROR, "Invalid supplier id.").show();
+            return false;
+        }
+        /*Integer telNum = Integer.valueOf(txtNumber.getText());
+        boolean matches1 = Pattern.matches("[0-9]{10}]", telNum);
+
+        if(!matches1){
+            new Alert(Alert.AlertType.ERROR, "Invalid customer telephone number.").show();
+            return false;
+        }*/
+        return true;
     }
 
     @FXML
