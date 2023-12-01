@@ -162,11 +162,6 @@
                   <Image url="@../assets.Ui/icons8-create-order-30.png" />
                </image>
             </ImageView>
-            <JFXButton fx:id="btnPrint" layoutX="840.0" layoutY="534.0" onAction="#btnPrintOnAction" prefHeight="43.0" prefWidth="116.0" style="-fx-border-radius: 10; -fx-background-color: #ffd32a;" text="Print">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </JFXButton>
          </children></AnchorPane>
 
     </children>

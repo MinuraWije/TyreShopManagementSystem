@@ -152,7 +152,6 @@ public class PaymentFormController {
                 e.printStackTrace();
             }
         }
-
     }
 
     private boolean validatePayment() {

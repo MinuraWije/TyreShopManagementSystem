@@ -146,6 +146,13 @@ public class SupplierFormController {
             new Alert(Alert.AlertType.ERROR, "Invalid supplier id.").show();
             return false;
         }
+        String name = txtName.getText();
+        boolean matches1 = Pattern.matches("[A-Za-z]{4,}", name);
+
+        if (!matches1) {
+            new Alert(Alert.AlertType.ERROR, "Invalid supplier name.").show();
+            return false;
+        }
         /*Integer telNum = Integer.valueOf(txtNumber.getText());
         boolean matches1 = Pattern.matches("[0-9]{10}]", telNum);
 

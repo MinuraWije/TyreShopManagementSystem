@@ -152,11 +152,18 @@ public class CustomerFormController {
             new Alert(Alert.AlertType.ERROR, "Invalid customer id.").show();
             return false;
         }
-        /*Integer telNum = Integer.valueOf(txtNumber.getText());
-        boolean matches1 = Pattern.matches("[0-9]{10}]", telNum);
+        String name = txtName.getText();
+        boolean matches1 = Pattern.matches("[A-Za-z]{4,}", name);
 
-        if(!matches1){
-            new Alert(Alert.AlertType.ERROR, "Invalid customer telephone number.").show();
+        if (!matches1) {
+            new Alert(Alert.AlertType.ERROR, "Invalid customer name.").show();
+            return false;
+        }
+        /*Integer number = Integer.valueOf(txtNumber.getText());
+        boolean matches2 = Pattern.matches("[0-9]{11}]",number);
+
+        if(!matches2){
+            new Alert(Alert.AlertType.ERROR,"Invalid customer number.").show();
             return false;
         }*/
         return true;

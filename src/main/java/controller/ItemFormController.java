@@ -144,6 +144,27 @@ public class ItemFormController {
             new Alert(Alert.AlertType.ERROR, "Invalid item id.").show();
             return false;
         }
+        String brand = txtBrand.getText();
+        boolean matches1 = Pattern.matches("[A-Za-z]{4,}", brand);
+
+        if (!matches1) {
+            new Alert(Alert.AlertType.ERROR, "Invalid brand name.").show();
+            return false;
+        }
+        String model = txtModel.getText();
+        boolean matches2 = Pattern.matches("[A-Za-z]{4,}", model);
+
+        if (!matches2) {
+            new Alert(Alert.AlertType.ERROR, "Invalid model name.").show();
+            return false;
+        }
+        /*Integer number = Integer.valueOf(txtQtyOnHand.getText());
+        boolean matches3 = Pattern.matches("[0-9]{3}]",number);
+
+        if(!matches3){
+            new Alert(Alert.AlertType.ERROR,"Invalid number of qty.").show();
+            return false;
+        }*/
         return true;
     }
 
