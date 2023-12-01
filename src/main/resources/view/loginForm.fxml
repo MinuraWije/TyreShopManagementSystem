@@ -14,11 +14,11 @@
             <Image url="@../assets.Ui/newLogin.png" />
          </image>
       </ImageView>
-      <JFXTextField fx:id="txtUsername" layoutX="661.0" layoutY="280.0" prefHeight="65.0" prefWidth="457.0">
+      <JFXTextField fx:id="txtUsername" layoutX="661.0" layoutY="280.0" prefHeight="65.0" prefWidth="457.0" unFocusColor="#0984e3">
          <font>
             <Font size="18.0" />
          </font></JFXTextField>
-      <JFXTextField fx:id="txtPassword" layoutX="661.0" layoutY="475.0" prefHeight="65.0" prefWidth="457.0">
+      <JFXTextField fx:id="txtPassword" layoutX="661.0" layoutY="475.0" prefHeight="65.0" prefWidth="457.0" unFocusColor="#0984e3">
          <font>
             <Font size="18.0" />
          </font></JFXTextField>

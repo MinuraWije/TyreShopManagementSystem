@@ -1,8 +1,6 @@
 package controller;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import dto.CustomerDTO;
 import dto.ItemDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.CustomerModel;
 import model.ItemModel;
 
 import java.io.IOException;
@@ -24,45 +21,6 @@ public class ItemFormController {
 
     @FXML
     private AnchorPane root;
-
-    @FXML
-    private JFXButton homeBtn;
-
-    @FXML
-    private JFXButton customerBtn;
-
-    @FXML
-    private JFXButton orderBtn;
-
-    @FXML
-    private JFXButton itemBtn;
-
-    @FXML
-    private JFXButton supplierBtn;
-
-    @FXML
-    private JFXButton employeeBtn;
-
-    @FXML
-    private JFXButton paymentBtn;
-
-    @FXML
-    private JFXButton logoutBtn;
-
-    @FXML
-    private AnchorPane itemPane;
-
-    @FXML
-    private JFXButton btnSave;
-
-    @FXML
-    private JFXButton btnUpdate;
-
-    @FXML
-    private JFXButton btnDelete;
-
-    @FXML
-    private JFXButton btnView;
 
     @FXML
     private JFXTextField txtItemId;
@@ -158,13 +116,6 @@ public class ItemFormController {
             new Alert(Alert.AlertType.ERROR, "Invalid model name.").show();
             return false;
         }
-        /*Integer number = Integer.valueOf(txtQtyOnHand.getText());
-        boolean matches3 = Pattern.matches("[0-9]{3}]",number);
-
-        if(!matches3){
-            new Alert(Alert.AlertType.ERROR,"Invalid number of qty.").show();
-            return false;
-        }*/
         return true;
     }
 
@@ -193,6 +144,28 @@ public class ItemFormController {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void txtItemIdSearchOnAction(ActionEvent event) {
+        String itemId = txtItemId.getText();
+
+        try {
+            ItemDTO itemDTO= ItemModel.search(itemId);
+
+            if (itemDTO != null) {
+                txtItemId.setText(itemDTO.getItemId());
+                txtBrand.setText(itemDTO.getBrand());
+                txtModel.setText(itemDTO.getModel());
+                txtUnitPrice.setText(String.valueOf(itemDTO.getUnitPrice()));
+                txtQtyOnHand.setText(String.valueOf(itemDTO.getQtyOnHand()));
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Invalid ID").show();
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -265,26 +238,5 @@ public class ItemFormController {
         stage.setScene(new Scene(anchorPane));
     }
 
-    @FXML
-    void txtItemIdSearchOnAction(ActionEvent event) {
-        String itemId = txtItemId.getText();
-
-        try {
-            ItemDTO itemDTO= ItemModel.search(itemId);
-
-            if (itemDTO != null) {
-                txtItemId.setText(itemDTO.getItemId());
-                txtBrand.setText(itemDTO.getBrand());
-                txtModel.setText(itemDTO.getModel());
-                txtUnitPrice.setText(String.valueOf(itemDTO.getUnitPrice()));
-                txtQtyOnHand.setText(String.valueOf(itemDTO.getQtyOnHand()));
-            }else {
-                new Alert(Alert.AlertType.ERROR,"Invalid ID").show();
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
 }

@@ -45,8 +45,7 @@ public class OrderModel {
 
     public static boolean save(OrderDTO orderDTO) throws SQLException {
         String sql = "INSERT INTO orders(orderId,customerID,orderDate) VALUES(?,?,?)";
-        boolean isSaved = CrudUtil.execute(sql, orderDTO.getOrderId(),orderDTO.getCustomerId(),orderDTO.getOrderDate());
-        return isSaved;
+        return CrudUtil.execute(sql, orderDTO.getOrderId(),orderDTO.getCustomerId(),orderDTO.getOrderDate());
     }
 
     public static boolean update(OrderDTO orderDTO) throws SQLException {

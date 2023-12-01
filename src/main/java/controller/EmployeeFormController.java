@@ -1,8 +1,6 @@
 package controller;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import dto.CustomerDTO;
 import dto.EmployeeDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.CustomerModel;
 import model.EmployeeModel;
 
 import java.io.IOException;
@@ -24,45 +21,6 @@ public class EmployeeFormController {
 
     @FXML
     private AnchorPane root;
-
-    @FXML
-    private JFXButton homeBtn;
-
-    @FXML
-    private JFXButton customerBtn;
-
-    @FXML
-    private JFXButton orderBtn;
-
-    @FXML
-    private JFXButton itemBtn;
-
-    @FXML
-    private JFXButton supplierBtn;
-
-    @FXML
-    private JFXButton employeeBtn;
-
-    @FXML
-    private JFXButton paymentBtn;
-
-    @FXML
-    private JFXButton logoutBtn;
-
-    @FXML
-    private AnchorPane employeePane;
-
-    @FXML
-    private JFXButton btnSave;
-
-    @FXML
-    private JFXButton btnUpdate;
-
-    @FXML
-    private JFXButton btnDelete;
-
-    @FXML
-    private JFXButton btnView;
 
     @FXML
     private JFXTextField txtEmployeeId;
@@ -114,7 +72,6 @@ public class EmployeeFormController {
     void btnSaveOnAction(ActionEvent event) {
         boolean isValidated = validateEmployee();
         if(isValidated){
-            //new Alert(Alert.AlertType.INFORMATION,"Employee id validated.").show();
 
             String employeeId = txtEmployeeId.getText();
             String name = txtName.getText();
@@ -161,13 +118,7 @@ public class EmployeeFormController {
             new Alert(Alert.AlertType.ERROR, "Invalid employee name.").show();
             return false;
         }
-        /*Integer telNum = Integer.valueOf(txtNumber.getText());
-        boolean matches1 = Pattern.matches("[0-9]{10}]", telNum);
 
-        if(!matches1){
-            new Alert(Alert.AlertType.ERROR, "Invalid customer telephone number.").show();
-            return false;
-        }*/
         return true;
     }
 
@@ -198,6 +149,29 @@ public class EmployeeFormController {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void txtEmployeeIdSearchOnAction(ActionEvent event) {
+        String employeeId = txtEmployeeId.getText();
+
+        try {
+            EmployeeDTO employeeDTO= EmployeeModel.search(employeeId);
+
+            if (employeeDTO != null) {
+                txtEmployeeId.setText(employeeDTO.getEmployeeId());
+                txtName.setText(employeeDTO.getName());
+                txtAddress.setText(employeeDTO.getAddress());
+                txtNumber.setText(String.valueOf(employeeDTO.getTelNum()));
+                txtEmail.setText(employeeDTO.getEmail());
+                txtRole.setText(employeeDTO.getRole());
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Invalid ID").show();
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -268,29 +242,6 @@ public class EmployeeFormController {
         Stage stage = (Stage) root.getScene().getWindow();
 
         stage.setScene(new Scene(anchorPane));
-    }
-
-    @FXML
-    void txtEmployeeIdSearchOnAction(ActionEvent event) {
-        String employeeId = txtEmployeeId.getText();
-
-        try {
-            EmployeeDTO employeeDTO= EmployeeModel.search(employeeId);
-
-            if (employeeDTO != null) {
-                txtEmployeeId.setText(employeeDTO.getEmployeeId());
-                txtName.setText(employeeDTO.getName());
-                txtAddress.setText(employeeDTO.getAddress());
-                txtNumber.setText(String.valueOf(employeeDTO.getTelNum()));
-                txtEmail.setText(employeeDTO.getEmail());
-                txtRole.setText(employeeDTO.getRole());
-            }else {
-                new Alert(Alert.AlertType.ERROR,"Invalid ID").show();
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }

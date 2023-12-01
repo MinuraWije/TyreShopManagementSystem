@@ -11,7 +11,6 @@ public class PlaceOrderModel {
     private  OrderModel orderModel = new OrderModel();
     private  ItemModel itemModel = new ItemModel();
     public boolean placeOrder(PlaceOrderDTO placeOrderDto) throws SQLException {
-        //System.out.println(placeOrderDto);
 
         String orderId = placeOrderDto.getOrderId();
         String customerId = placeOrderDto.getCustomerId();

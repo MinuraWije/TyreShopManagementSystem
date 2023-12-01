@@ -1,7 +1,5 @@
 package controller;
 
-import com.jfoenix.controls.JFXButton;
-import dto.tm.CustomerTM;
 import dto.tm.EmployeeTM;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +13,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.CustomerModel;
 import model.EmployeeModel;
 
 import java.io.IOException;
@@ -28,36 +25,6 @@ public class ViewEmployeeFormController implements Initializable {
 
     @FXML
     private AnchorPane root;
-
-    @FXML
-    private JFXButton homeBtn;
-
-    @FXML
-    private JFXButton customerBtn;
-
-    @FXML
-    private JFXButton orderBtn;
-
-    @FXML
-    private JFXButton itemBtn;
-
-    @FXML
-    private JFXButton supplierBtn;
-
-    @FXML
-    private JFXButton employeeBtn;
-
-    @FXML
-    private JFXButton paymentBtn;
-
-    @FXML
-    private JFXButton logoutBtn;
-
-    @FXML
-    private AnchorPane viewEmployeePane;
-
-    @FXML
-    private JFXButton btnBack;
 
     @FXML
     private TableView<EmployeeTM> tblEmployee;

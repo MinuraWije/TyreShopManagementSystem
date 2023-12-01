@@ -1,8 +1,6 @@
 package model;
 
-import dto.CustomerDTO;
 import dto.SupplierDTO;
-import dto.tm.CustomerTM;
 import dto.tm.SupplierTM;
 import util.CrudUtil;
 
@@ -19,8 +17,7 @@ public class SupplierModel {
 
     public static boolean save(SupplierDTO supplierDTO) throws SQLException {
         String sql = "INSERT INTO supplier(supplierId,name,address,telNum,email) VALUES(?,?,?,?,?)";
-        boolean isSaved = CrudUtil.execute(sql, supplierDTO.getSupplierId(),supplierDTO.getName(),supplierDTO.getAddress(),supplierDTO.getTelNum(),supplierDTO.getEmail());
-        return isSaved;
+        return CrudUtil.execute(sql, supplierDTO.getSupplierId(),supplierDTO.getName(),supplierDTO.getAddress(),supplierDTO.getTelNum(),supplierDTO.getEmail());
     }
 
     public static boolean update(SupplierDTO supplierDTO) throws SQLException {

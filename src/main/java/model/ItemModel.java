@@ -21,8 +21,7 @@ public class ItemModel {
 
     public static boolean save(ItemDTO itemDTO) throws SQLException {
         String sql = "INSERT INTO item(itemId,brand,model,unitPrice,qtyOnHand) VALUES(?,?,?,?,?)";
-        boolean isSaved = CrudUtil.execute(sql, itemDTO.getItemId(),itemDTO.getBrand(),itemDTO.getModel(),itemDTO.getUnitPrice(),itemDTO.getQtyOnHand());
-        return isSaved;
+        return CrudUtil.execute(sql, itemDTO.getItemId(),itemDTO.getBrand(),itemDTO.getModel(),itemDTO.getUnitPrice(),itemDTO.getQtyOnHand());
     }
 
     public static boolean update(ItemDTO itemDTO) throws SQLException {

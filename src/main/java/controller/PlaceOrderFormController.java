@@ -46,33 +46,6 @@ public class PlaceOrderFormController implements Initializable{
     private AnchorPane root;
 
     @FXML
-    private JFXButton homeBtn;
-
-    @FXML
-    private JFXButton customerBtn;
-
-    @FXML
-    private JFXButton orderBtn;
-
-    @FXML
-    private JFXButton itemBtn;
-
-    @FXML
-    private JFXButton supplierBtn;
-
-    @FXML
-    private JFXButton employeeBtn;
-
-    @FXML
-    private JFXButton paymentBtn;
-
-    @FXML
-    private JFXButton logoutBtn;
-
-    @FXML
-    private AnchorPane orderPane;
-
-    @FXML
     private Label lblOrderId;
 
     @FXML
@@ -98,9 +71,6 @@ public class PlaceOrderFormController implements Initializable{
 
     @FXML
     private JFXTextField txtQty;
-
-    @FXML
-    private JFXButton btnCart;
 
     @FXML
     private TableView<CartTM> tblCart;
@@ -129,11 +99,6 @@ public class PlaceOrderFormController implements Initializable{
     @FXML
     private Label lblTotal;
 
-    @FXML
-    private JFXButton btnPlaceOrder;
-
-    @FXML
-    private JFXButton btnPrint;
 
     private CustomerModel customerModel = new CustomerModel();
     private ObservableList<CartTM> obList = FXCollections.observableArrayList();

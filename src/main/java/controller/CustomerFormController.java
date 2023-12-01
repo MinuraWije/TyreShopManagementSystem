@@ -1,6 +1,5 @@
 package controller;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import dto.CustomerDTO;
 import javafx.collections.FXCollections;
@@ -29,45 +28,6 @@ public class CustomerFormController {
     private AnchorPane root;
 
     @FXML
-    private JFXButton homeBtn;
-
-    @FXML
-    private JFXButton customerBtn;
-
-    @FXML
-    private JFXButton orderBtn;
-
-    @FXML
-    private JFXButton itemBtn;
-
-    @FXML
-    private JFXButton supplierBtn;
-
-    @FXML
-    private JFXButton employeeBtn;
-
-    @FXML
-    private JFXButton paymentBtn;
-
-    @FXML
-    private JFXButton logoutBtn;
-
-    @FXML
-    private AnchorPane customerPane;
-
-    @FXML
-    private JFXButton btnSave;
-
-    @FXML
-    private JFXButton btnUpdate;
-
-    @FXML
-    private JFXButton btnDelete;
-
-    @FXML
-    private JFXButton btnView;
-
-    @FXML
     private JFXTextField txtCustomerId;
 
     @FXML
@@ -82,8 +42,6 @@ public class CustomerFormController {
     @FXML
     private JFXTextField txtEmail;
 
-    @FXML
-    private JFXButton btnPrint;
 
     ObservableList<CustomerDTO> observableList = FXCollections.observableArrayList();
 
@@ -114,7 +72,6 @@ public class CustomerFormController {
     void btnSaveOnAction(ActionEvent event) {
         boolean isValidated = validateCustomer();
         if(isValidated){
-            //new Alert(Alert.AlertType.INFORMATION,"Customer id validated.").show();
 
             String customerId = txtCustomerId.getText();
             String name = txtName.getText();
@@ -159,13 +116,6 @@ public class CustomerFormController {
             new Alert(Alert.AlertType.ERROR, "Invalid customer name.").show();
             return false;
         }
-        /*Integer number = Integer.valueOf(txtNumber.getText());
-        boolean matches2 = Pattern.matches("[0-9]{11}]",number);
-
-        if(!matches2){
-            new Alert(Alert.AlertType.ERROR,"Invalid customer number.").show();
-            return false;
-        }*/
         return true;
     }
 
@@ -196,6 +146,68 @@ public class CustomerFormController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void txtCustomerIdSearchOnAction(ActionEvent event) {
+        String customerId = txtCustomerId.getText();
+
+        try {
+            CustomerDTO customerDTO= CustomerModel.search(customerId);
+
+            if (customerDTO != null) {
+                txtCustomerId.setText(customerDTO.getCustomerId());
+                txtName.setText(customerDTO.getName());
+                txtAddress.setText(customerDTO.getAddress());
+                txtNumber.setText(String.valueOf(customerDTO.getTelNum()));
+                txtEmail.setText(customerDTO.getEmail());
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Invalid ID").show();
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    void btnPrintOnAction(ActionEvent event) {
+        String id = txtCustomerId.getText();
+
+        try {
+            CustomerDTO dto = CustomerModel.search(id);
+            if(dto!=null){
+                try {
+                    viewCustomerReport(dto);
+                } catch (JRException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void viewCustomerReport(CustomerDTO dto) throws JRException {
+        HashMap hashMap = new HashMap();
+        hashMap.put("id",dto.getCustomerId());
+        hashMap.put("name",dto.getName());
+        hashMap.put("address",dto.getAddress());
+        hashMap.put("number",Integer.toString(dto.getTelNum()));
+        hashMap.put("email",dto.getAddress());
+
+
+        InputStream resourceAsStream =  getClass().getResourceAsStream("/Report/Customer_report.jrxml");
+        JasperDesign load = JRXmlLoader.load(resourceAsStream);
+        JasperReport jasperReport= JasperCompileManager.compileReport(load);
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(
+                jasperReport,
+                hashMap,
+                new JREmptyDataSource()
+        );
+
+        JasperViewer.viewReport(jasperPrint,false);
     }
 
     @FXML
@@ -268,68 +280,5 @@ public class CustomerFormController {
 
         stage.setScene(new Scene(anchorPane));
     }
-
-    @FXML
-    void txtCustomerIdSearchOnAction(ActionEvent event) {
-        String customerId = txtCustomerId.getText();
-
-        try {
-            CustomerDTO customerDTO= CustomerModel.search(customerId);
-
-            if (customerDTO != null) {
-                txtCustomerId.setText(customerDTO.getCustomerId());
-                txtName.setText(customerDTO.getName());
-                txtAddress.setText(customerDTO.getAddress());
-                txtNumber.setText(String.valueOf(customerDTO.getTelNum()));
-                txtEmail.setText(customerDTO.getEmail());
-            }else {
-                new Alert(Alert.AlertType.ERROR,"Invalid ID").show();
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    void btnPrintOnAction(ActionEvent event) {
-        String id = txtCustomerId.getText();
-
-        try {
-            CustomerDTO dto = CustomerModel.search(id);
-            if(dto!=null){
-                try {
-                    viewCustomerReport(dto);
-                } catch (JRException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void viewCustomerReport(CustomerDTO dto) throws JRException {
-        HashMap hashMap = new HashMap();
-        hashMap.put("id",dto.getCustomerId());
-        hashMap.put("name",dto.getName());
-        hashMap.put("address",dto.getAddress());
-        hashMap.put("number",Integer.toString(dto.getTelNum()));
-        hashMap.put("email",dto.getAddress());
-
-
-        InputStream resourceAsStream =  getClass().getResourceAsStream("/Report/Customer_report.jrxml");
-        JasperDesign load = JRXmlLoader.load(resourceAsStream);
-        JasperReport jasperReport= JasperCompileManager.compileReport(load);
-
-        JasperPrint jasperPrint = JasperFillManager.fillReport(
-                jasperReport,
-                hashMap,
-                new JREmptyDataSource()
-        );
-
-        JasperViewer.viewReport(jasperPrint,false);
-    }
-
 
 }

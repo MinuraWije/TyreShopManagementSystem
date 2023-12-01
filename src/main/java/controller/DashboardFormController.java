@@ -1,6 +1,5 @@
 package controller;
 
-import com.jfoenix.controls.JFXButton;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -23,45 +22,10 @@ public class DashboardFormController {
     private AnchorPane root;
 
     @FXML
-    private JFXButton homeBtn;
-
-    @FXML
-    private JFXButton customerBtn;
-
-    @FXML
-    private JFXButton orderBtn;
-
-    @FXML
-    private JFXButton itemBtn;
-
-    @FXML
-    private JFXButton supplierBtn;
-
-    @FXML
-    private JFXButton employeeBtn;
-
-    @FXML
-    private JFXButton paymentBtn;
-
-    @FXML
-    private JFXButton logoutBtn;
-
-    @FXML
-    private AnchorPane load;
-
-    @FXML
-    private Label lblNoOfEmployees;
-
-    @FXML
-    private Label lblNoOfCustomers;
-
-    @FXML
     private Label lblTime;
 
     @FXML
     private Label lblDate;
-    //public Label lblTime;
-    //public Label lblDate;
 
     private void updateTimeLabel() {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");

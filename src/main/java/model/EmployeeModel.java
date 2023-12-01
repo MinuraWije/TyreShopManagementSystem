@@ -1,8 +1,6 @@
 package model;
 
-import dto.CustomerDTO;
 import dto.EmployeeDTO;
-import dto.tm.CustomerTM;
 import dto.tm.EmployeeTM;
 import util.CrudUtil;
 
@@ -14,8 +12,7 @@ import java.util.List;
 public class EmployeeModel {
     public static boolean save(EmployeeDTO employeeDTO) throws SQLException {
         String sql = "INSERT INTO employee(employeeId,name,address,telNum,email,role) VALUES(?,?,?,?,?,?)";
-        boolean isSaved = CrudUtil.execute(sql, employeeDTO.getEmployeeId(),employeeDTO.getName(),employeeDTO.getAddress(),employeeDTO.getTelNum(),employeeDTO.getEmail(), employeeDTO.getRole());
-        return isSaved;
+        return CrudUtil.execute(sql, employeeDTO.getEmployeeId(),employeeDTO.getName(),employeeDTO.getAddress(),employeeDTO.getTelNum(),employeeDTO.getEmail(), employeeDTO.getRole());
     }
 
     public static boolean update(EmployeeDTO employeeDTO) throws SQLException {

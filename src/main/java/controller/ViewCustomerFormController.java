@@ -1,6 +1,5 @@
 package controller;
 
-import com.jfoenix.controls.JFXButton;
 import dto.tm.CustomerTM;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,36 +24,6 @@ import java.util.ResourceBundle;
 public class ViewCustomerFormController implements Initializable {
     @FXML
     private AnchorPane root;
-
-    @FXML
-    private JFXButton homeBtn;
-
-    @FXML
-    private JFXButton customerBtn;
-
-    @FXML
-    private JFXButton orderBtn;
-
-    @FXML
-    private JFXButton itemBtn;
-
-    @FXML
-    private JFXButton supplierBtn;
-
-    @FXML
-    private JFXButton employeeBtn;
-
-    @FXML
-    private JFXButton paymentBtn;
-
-    @FXML
-    private JFXButton logoutBtn;
-
-    @FXML
-    private AnchorPane viewCustomerPane;
-
-    @FXML
-    private JFXButton btnBack;
 
     @FXML
     public TableView<CustomerTM> tblCustomer;

@@ -1,10 +1,7 @@
 package controller;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
-import dto.CustomerDTO;
 import dto.OrderDTO;
 import dto.PaymentDTO;
 import dto.tm.OrderTM;
@@ -18,7 +15,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.CustomerModel;
 import model.OrderModel;
 import model.PaymentModel;
 import net.sf.jasperreports.engine.*;
@@ -37,50 +33,9 @@ import java.util.regex.Pattern;
 public class PaymentFormController {
 
     public ComboBox cmbOrderId;
+
     @FXML
     private AnchorPane root;
-
-    @FXML
-    private JFXButton homeBtn;
-
-    @FXML
-    private JFXButton customerBtn;
-
-    @FXML
-    private JFXButton orderBtn;
-
-    @FXML
-    private JFXButton itemBtn;
-
-    @FXML
-    private JFXButton supplierBtn;
-
-    @FXML
-    private JFXButton employeeBtn;
-
-    @FXML
-    private JFXButton paymentBtn;
-
-    @FXML
-    private JFXButton logoutBtn;
-
-    @FXML
-    private AnchorPane paymentPane;
-
-    @FXML
-    private JFXButton btnSave;
-
-    @FXML
-    private JFXButton btnUpdate;
-
-    @FXML
-    private JFXButton btnDelete;
-
-    @FXML
-    private JFXButton btnView;
-
-    @FXML
-    private JFXButton btnPrint;
 
     @FXML
     private JFXTextField txtPaymentId;
@@ -97,7 +52,6 @@ public class PaymentFormController {
     private OrderModel orderModel = new OrderModel();
 
     ObservableList<PaymentDTO> observableList = FXCollections.observableArrayList();
-
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
@@ -162,13 +116,6 @@ public class PaymentFormController {
             new Alert(Alert.AlertType.ERROR, "Invalid payment id.").show();
             return false;
         }
-        /*Integer telNum = Integer.valueOf(txtNumber.getText());
-        boolean matches1 = Pattern.matches("[0-9]{10}]", telNum);
-
-        if(!matches1){
-            new Alert(Alert.AlertType.ERROR, "Invalid customer telephone number.").show();
-            return false;
-        }*/
         return true;
     }
 
@@ -198,76 +145,6 @@ public class PaymentFormController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    void btnViewOnAction(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/viewPaymentForm.fxml"));
-        Stage stage = (Stage) root.getScene().getWindow();
-
-        stage.setScene(new Scene(anchorPane));
-    }
-
-
-    @FXML
-    void customerBtnOnAction(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/customerForm.fxml"));
-        Stage stage = (Stage) root.getScene().getWindow();
-
-        stage.setScene(new Scene(anchorPane));
-    }
-
-    @FXML
-    void employeeBtnOnAction(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/employeeForm.fxml"));
-        Stage stage = (Stage) root.getScene().getWindow();
-
-        stage.setScene(new Scene(anchorPane));
-    }
-
-    @FXML
-    void homeBtnOnAction(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/dashboardForm.fxml"));
-        Stage stage = (Stage) root.getScene().getWindow();
-
-        stage.setScene(new Scene(anchorPane));
-    }
-
-    @FXML
-    void itemBtnOnAction(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/itemForm.fxml"));
-        Stage stage = (Stage) root.getScene().getWindow();
-
-        stage.setScene(new Scene(anchorPane));
-    }
-
-    @FXML
-    void logoutBtnOnAction(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/loginForm.fxml"));
-        Stage stage = (Stage) root.getScene().getWindow();
-
-        stage.setScene(new Scene(anchorPane));
-    }
-
-    @FXML
-    void orderBtnOnAction(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/placeOrderForm.fxml"));
-        Stage stage = (Stage) root.getScene().getWindow();
-
-        stage.setScene(new Scene(anchorPane));
-    }
-
-    @FXML
-    void paymentBtnOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void supplierBtnOnAction(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/supplierForm.fxml"));
-        Stage stage = (Stage) root.getScene().getWindow();
-
-        stage.setScene(new Scene(anchorPane));
     }
 
     @FXML
@@ -358,6 +235,76 @@ public class PaymentFormController {
 
     public void initialize() {
         loadOrderId();
+    }
+
+    @FXML
+    void btnViewOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/viewPaymentForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
+
+        stage.setScene(new Scene(anchorPane));
+    }
+
+
+    @FXML
+    void customerBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/customerForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
+
+        stage.setScene(new Scene(anchorPane));
+    }
+
+    @FXML
+    void employeeBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/employeeForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
+
+        stage.setScene(new Scene(anchorPane));
+    }
+
+    @FXML
+    void homeBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/dashboardForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
+
+        stage.setScene(new Scene(anchorPane));
+    }
+
+    @FXML
+    void itemBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/itemForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
+
+        stage.setScene(new Scene(anchorPane));
+    }
+
+    @FXML
+    void logoutBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/loginForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
+
+        stage.setScene(new Scene(anchorPane));
+    }
+
+    @FXML
+    void orderBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/placeOrderForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
+
+        stage.setScene(new Scene(anchorPane));
+    }
+
+    @FXML
+    void paymentBtnOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void supplierBtnOnAction(ActionEvent event) throws IOException {
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/supplierForm.fxml"));
+        Stage stage = (Stage) root.getScene().getWindow();
+
+        stage.setScene(new Scene(anchorPane));
     }
 
 }

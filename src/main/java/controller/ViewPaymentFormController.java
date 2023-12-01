@@ -1,6 +1,5 @@
 package controller;
 
-import com.jfoenix.controls.JFXButton;
 import dto.tm.PaymentTM;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,36 +25,6 @@ public class ViewPaymentFormController implements Initializable {
 
     @FXML
     private AnchorPane root;
-
-    @FXML
-    private JFXButton homeBtn;
-
-    @FXML
-    private JFXButton customerBtn;
-
-    @FXML
-    private JFXButton orderBtn;
-
-    @FXML
-    private JFXButton itemBtn;
-
-    @FXML
-    private JFXButton supplierBtn;
-
-    @FXML
-    private JFXButton employeeBtn;
-
-    @FXML
-    private JFXButton paymentBtn;
-
-    @FXML
-    private JFXButton logoutBtn;
-
-    @FXML
-    private AnchorPane viewPaymentPane;
-
-    @FXML
-    private JFXButton btnBack;
 
     @FXML
     private TableView<PaymentTM> tblPayment;

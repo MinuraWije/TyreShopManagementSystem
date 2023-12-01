@@ -1,6 +1,5 @@
 package model;
 
-import dto.CustomerDTO;
 import dto.PaymentDTO;
 import dto.tm.PaymentTM;
 import util.CrudUtil;
@@ -13,8 +12,7 @@ import java.util.List;
 public class PaymentModel {
     public static boolean save(PaymentDTO paymentDTO) throws SQLException {
         String sql = "INSERT INTO payment(paymentId,orderId,amount,paymentDate,description) VALUES(?,?,?,?,?)";
-        boolean isSaved = CrudUtil.execute(sql, paymentDTO.getPaymentId(),paymentDTO.getOrderId(),paymentDTO.getAmount(),paymentDTO.getPaymentDate(),paymentDTO.getDescription());
-        return isSaved;
+        return CrudUtil.execute(sql, paymentDTO.getPaymentId(),paymentDTO.getOrderId(),paymentDTO.getAmount(),paymentDTO.getPaymentDate(),paymentDTO.getDescription());
     }
 
     public static boolean delete(String paymentId) throws SQLException {
